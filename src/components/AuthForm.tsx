@@ -20,28 +20,9 @@ const AuthForm: React.FC<AuthFormProps> = ({
     e.preventDefault();
     if (!username.trim()) return;
     if (mode === "login") {
-      // Gọi API lấy role
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/chat/users`);
-        const users = await res.json();
-        const found = users.find((u: any) => u.username === username.trim());
-        onLogin(username.trim(), found?.role);
-      } catch {
-        onLogin(username.trim());
-      }
+      onLogin(username.trim());
     } else {
-      // Đăng ký, lấy role từ response
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/chat/users`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: username.trim() }),
-        });
-        const data = await res.json();
-        onRegister(username.trim(), data.role);
-      } catch {
-        onRegister(username.trim());
-      }
+      onRegister(username.trim());
     }
   };
 
